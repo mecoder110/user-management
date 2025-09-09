@@ -20,7 +20,7 @@ public interface UserService {
 
     public boolean register(UserDto userDto);
 
-    public UserDto login(String email, String pwd);
+    public UserDto login(UserDto userDto);
 
     public boolean updatePwd(ResetPwdDto resetPwdDto);
     // third party API

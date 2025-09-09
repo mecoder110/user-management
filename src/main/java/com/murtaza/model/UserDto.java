@@ -15,7 +15,7 @@ public class UserDto {
     private String pwd;
     private String updatedPwd;
 
-    private String country;
-    private String state;
-    private String city;
+    private Integer countryId;
+    private Integer stateId;
+    private Integer cityId;
 }

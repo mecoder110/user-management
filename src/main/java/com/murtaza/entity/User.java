@@ -25,9 +25,15 @@ public class User {
     private String updatedPwd;
 
 
-    private String country;
-    private String state;
-    private String city;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private State state;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @CreationTimestamp
     private Timestamp createdAt;

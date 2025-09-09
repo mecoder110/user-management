@@ -4,18 +4,18 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.Random;
 
 @Service
 @Log
 public class PwdGenerator {
 
-    public String pwdGen() {
-        String chars = "0123456789";
-        SecureRandom random = new SecureRandom();
+    public String pwdGen(int pwdSize) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+        Random random = new Random();
         StringBuilder sb = new StringBuilder();
-        int length = 4; // password length
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < pwdSize; i++) {
             int index = random.nextInt(chars.length());
             sb.append(chars.charAt(index));
         }

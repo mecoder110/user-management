@@ -1,4 +1,4 @@
-package com.murtaza.controller.configuration;
+package com.murtaza.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
