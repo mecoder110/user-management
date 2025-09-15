@@ -1,7 +1,5 @@
 package com.murtaza.model;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data

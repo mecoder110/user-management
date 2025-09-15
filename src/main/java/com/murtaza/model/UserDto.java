@@ -1,8 +1,5 @@
 package com.murtaza.model;
 
-import com.murtaza.entity.City;
-import com.murtaza.entity.Country;
-import com.murtaza.entity.State;
 import lombok.Data;
 
 @Data

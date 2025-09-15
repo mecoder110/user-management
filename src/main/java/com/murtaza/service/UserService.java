@@ -1,9 +1,6 @@
 package com.murtaza.service;
 
 
-import com.murtaza.entity.City;
-import com.murtaza.entity.Country;
-import com.murtaza.entity.State;
 import com.murtaza.model.*;
 
 import java.util.List;

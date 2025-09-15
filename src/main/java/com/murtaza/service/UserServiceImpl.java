@@ -12,10 +12,12 @@ import com.murtaza.repository.UserRepository;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,10 +41,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<CountryDto> getCountries() {
         List<Country> all = countryRepository.findAll();
-        return all.stream().map(country -> {
-                    return modelMapper.map(country, CountryDto.class);
-                }
-        ).collect(Collectors.toList());
+        return all.stream().map(country ->
+                modelMapper.map(country, CountryDto.class)
+        ).toList();
     }
 
     @Override
@@ -50,9 +51,9 @@ public class UserServiceImpl implements UserService {
         Country country = countryRepository.findById(countryId)
                 .orElseThrow();
         List<State> byCountry = stateRepository.findByCountry(country);
-        return byCountry.stream().map(state -> {
-            return modelMapper.map(state, StateDto.class);
-        }).collect(Collectors.toList());
+        return byCountry.stream().map(state ->
+                modelMapper.map(state, StateDto.class)
+        ).toList();
     }
 
     @Override
@@ -60,9 +61,9 @@ public class UserServiceImpl implements UserService {
         State state = stateRepository.findById(stateId)
                 .orElseThrow();
         List<City> byState = cityRepository.findByState(state);
-        return byState.stream().map(city -> {
-            return modelMapper.map(city, CityDto.class);
-        }).collect(Collectors.toList());
+        return byState.stream().map(city ->
+                modelMapper.map(city, CityDto.class)
+        ).toList();
     }
 
     @Override
@@ -90,12 +91,12 @@ public class UserServiceImpl implements UserService {
         user.setCountry(country);
         user.setState(state);
         user.setCity(city);
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         // Email Send logic
-        String subject="Login to temp password";
-        String body = "Temp Password is " +user.getPwd();
-        emailService.sendMail(user.getEmail(),subject,body);
+        String subject = "Login to temp password";
+        String body = "Temp Password is " + user.getPwd();
+        emailService.sendMail(user.getEmail(), subject, body);
         return true;
     }
 
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
             if (userFromDb.getPwd().equals(resetPwdDto.getOldPwd())) {
                 userFromDb.setUpdatedPwd("YES");
                 userFromDb.setPwd(resetPwdDto.getNewPwd());
-                User save = userRepository.save(userFromDb);
+                userRepository.save(userFromDb);
                 return true;
             }
             return false;
@@ -131,11 +132,15 @@ public class UserServiceImpl implements UserService {
 
         String apiUrl = "https://zenquotes.io/api/random";
         RestTemplate rt = new RestTemplate();
-        // QuoteApiResponseDto body = rt.getForEntity(apiUrl, QuoteApiResponseDto.class).getBody();
 
         QuoteApiResponseDto[] response = rt.getForEntity(apiUrl, QuoteApiResponseDto[].class).getBody();
+
         log.info("========>>  " + response);
-        QuoteApiResponseDto body = modelMapper.map(response[0], QuoteApiResponseDto.class);
-        return body;
+        if (response != null && response.length > 0) {
+            return modelMapper.map(response[0], QuoteApiResponseDto.class);
+
+        } else {
+            return null;
+        }
     }
 }

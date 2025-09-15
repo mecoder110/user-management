@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping("/mail-taken/{email}")
     public ResponseEntity<ApiResponse<Boolean>> isEmailExist(@PathVariable String email) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<Boolean> response = new ApiResponse<>();
         boolean emailExist = userService.isEmailExist(email);
         if (emailExist) {
             response.setStatus(200);
@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/drop-down/country")
     public ResponseEntity<ApiResponse<List<CountryDto>>> getCountryList() {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<List<CountryDto>> response = new ApiResponse<>();
         List<CountryDto> countries = userService.getCountries();
         if (countries.isEmpty()) {
             response.setStatus(500);
@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/drop-down/state/{countryId}")
     public ResponseEntity<ApiResponse<List<StateDto>>> getStateList(@PathVariable Integer countryId) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<List<StateDto>> response = new ApiResponse<>();
         List<StateDto> states = userService.getStates(countryId);
         if (states.isEmpty()) {
             response.setStatus(500);
@@ -69,7 +69,7 @@ public class UserController {
 
     @GetMapping("/drop-down/city/{stateId}")
     public ResponseEntity<ApiResponse<List<CityDto>>> getCityList(@PathVariable Integer stateId) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<List<CityDto>> response = new ApiResponse<>();
         List<CityDto> cities = userService.getCities(stateId);
         if (cities.isEmpty()) {
             response.setStatus(500);
@@ -86,7 +86,7 @@ public class UserController {
 
     @PostMapping("/reqister")
     public ResponseEntity<ApiResponse<Boolean>> register(@RequestBody UserDto userDto) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<Boolean> response = new ApiResponse<>();
         boolean register = userService.register(userDto);
         if (register) {
             response.setStatus(200);
@@ -104,7 +104,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserDto>> login(@RequestBody UserDto userDto) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<UserDto> response = new ApiResponse<>();
         UserDto login = userService.login(userDto);
 
         if (login != null) {
@@ -122,7 +122,7 @@ public class UserController {
 
     @PostMapping("/reset-pwd")
     public ResponseEntity<ApiResponse<Boolean>> resetPwd(@RequestBody ResetPwdDto resetPwdDto) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<Boolean> response = new ApiResponse<>();
         boolean updated = userService.updatePwd(resetPwdDto);
 
         if (updated) {
@@ -140,7 +140,7 @@ public class UserController {
 
     @GetMapping("/quotes")
     public ResponseEntity<ApiResponse<QuoteApiResponseDto>> getQuotes() {
-        ApiResponse response = new ApiResponse();
+        ApiResponse<QuoteApiResponseDto> response = new ApiResponse<>();
         QuoteApiResponseDto quote = userService.getQuote();
         if (quote != null) {
             response.setStatus(200);
