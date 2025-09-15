@@ -10,10 +10,11 @@ import java.util.Random;
 @Log
 public class PwdGenerator {
 
+    Random random = new Random();
 
     public String pwdGen(int pwdSize) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-        Random random = new Random();
+
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < pwdSize; i++) {
